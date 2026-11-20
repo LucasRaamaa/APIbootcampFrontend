@@ -3,7 +3,7 @@ import { Modal } from "../../components/Modal";
 import { useAuth } from "../../context/AuthContext";
 import { userService } from "./userService";
 import { authService } from "../auth/authService";
-import { KeyRound, Trash2, CheckCircle2 } from "lucide-react";
+import { KeyRound, Trash2 } from "lucide-react";
 
 interface UserProfileModalProps {
   isOpen: boolean;
@@ -11,7 +11,7 @@ interface UserProfileModalProps {
 }
 
 export const UserProfileModal: React.FC<UserProfileModalProps> = ({ isOpen, onClose }) => {
-  const { user, refreshUser, logout } = useAuth();
+  const { user, logout } = useAuth();
 
   // Password change state
   const [currentPassword, setCurrentPassword] = useState("");
@@ -60,53 +60,53 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({ isOpen, onCl
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Mi Perfil y Seguridad">
-      <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      <div className="space-y-5">
         {/* Datos generales */}
-        <div style={{ backgroundColor: "var(--bg-elevated)", padding: "14px", borderRadius: "var(--radius-sm)" }}>
-          <div style={{ fontSize: "0.8rem", color: "var(--text-muted)", textTransform: "uppercase" }}>
+        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+          <div className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
             Datos del Titular
           </div>
-          <div style={{ fontSize: "1.1rem", fontWeight: 700, marginTop: "2px" }}>
+          <div className="text-base font-bold text-slate-900 dark:text-white mt-0.5">
             {user.name} {user.lastname}
           </div>
-          <div style={{ fontSize: "0.9rem", color: "var(--text-secondary)" }}>
+          <div className="text-xs text-slate-500 mt-0.5">
             {user.email}
           </div>
           {user.isAdmin && (
-            <div style={{ marginTop: "6px" }}>
-              <span className="badge badge-admin">Administrador</span>
+            <div className="mt-2">
+              <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+                Administrador
+              </span>
             </div>
           )}
         </div>
 
         {/* Cambio de Contraseña */}
         <div>
-          <h4 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: "12px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <KeyRound size={16} /> Cambiar Contraseña
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2.5 flex items-center gap-1.5">
+            <KeyRound size={15} /> Cambiar Contraseña
           </h4>
 
           {pwdMsg && (
             <div
-              style={{
-                fontSize: "0.85rem",
-                padding: "8px 12px",
-                borderRadius: "6px",
-                marginBottom: "12px",
-                backgroundColor: pwdMsg.type === "success" ? "var(--success-light)" : "var(--danger-light)",
-                color: pwdMsg.type === "success" ? "var(--success)" : "var(--danger)",
-              }}
+              className={`p-3 rounded-xl text-xs mb-3 border ${
+                pwdMsg.type === "success"
+                  ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/50"
+                  : "bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-900/50"
+              }`}
             >
               {pwdMsg.text}
             </div>
           )}
 
-          <form onSubmit={handleChangePassword} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <form onSubmit={handleChangePassword} className="space-y-3">
             <input
               type="password"
               placeholder="Contraseña Actual"
               required
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition"
             />
             <input
               type="password"
@@ -115,31 +115,35 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({ isOpen, onCl
               minLength={8}
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition"
             />
-            <button type="submit" disabled={pwdLoading} className="btn btn-secondary" style={{ width: "100%" }}>
+            <button
+              type="submit"
+              disabled={pwdLoading}
+              className="w-full py-2.5 px-4 rounded-xl font-bold text-sm bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 disabled:opacity-50 transition"
+            >
               {pwdLoading ? "Actualizando..." : "Actualizar Contraseña"}
             </button>
           </form>
         </div>
 
         {/* Zona Peligro: Eliminar Cuenta */}
-        <div style={{ borderTop: "1px solid var(--border-color)", paddingTop: "16px" }}>
-          <div style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginBottom: "8px" }}>
-            Para eliminar tu cuenta, tu saldo debe estar exactamente en <strong>$0.00</strong>.
+        <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
+          <div className="text-xs text-slate-400 mb-2">
+            Para eliminar tu cuenta, tu saldo debe estar exactamente en <strong className="text-slate-600 dark:text-slate-300">$0.00</strong>.
           </div>
           {deleteError && (
-            <div style={{ color: "var(--danger)", fontSize: "0.85rem", marginBottom: "8px" }}>
+            <div className="p-2.5 rounded-xl text-xs mb-2 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/50">
               {deleteError}
             </div>
           )}
           <button
             onClick={handleDeleteAccount}
             disabled={deleteLoading}
-            className="btn btn-danger"
-            style={{ width: "100%", fontSize: "0.85rem" }}
+            className="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/30 dark:hover:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/40 flex items-center justify-center gap-1.5 transition"
           >
-            <Trash2 size={16} />
-            {deleteLoading ? "Eliminando..." : "Eliminar Cuenta"}
+            <Trash2 size={15} />
+            <span>{deleteLoading ? "Eliminando..." : "Eliminar Cuenta"}</span>
           </button>
         </div>
       </div>

@@ -13,96 +13,57 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenProfile, onOpenAdmin }) =>
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <nav
-      style={{
-        backgroundColor: "var(--bg-surface)",
-        borderBottom: "1px solid var(--border-color)",
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-      }}
-    >
-      <div
-        className="container"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingTop: "14px",
-          paddingBottom: "14px",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <div
-            style={{
-              width: "36px",
-              height: "36px",
-              borderRadius: "10px",
-              backgroundColor: "var(--primary)",
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: 800,
-              fontSize: "1.1rem",
-              boxShadow: "0 2px 8px rgba(37, 99, 235, 0.4)",
-            }}
-          >
+    <nav className="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
+      <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+        {/* Logo */}
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-extrabold text-lg shadow-md shadow-blue-500/30">
             B
           </div>
-          <span style={{ fontWeight: 800, fontSize: "1.2rem", letterSpacing: "-0.02em" }}>
-            Bootcamp<span style={{ color: "var(--primary)" }}>Bank</span>
+          <span className="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">
+            Bootcamp<span className="text-blue-600 dark:text-blue-500">Bank</span>
           </span>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        {/* Acciones de navegacion */}
+        <div className="flex items-center gap-2">
+          {/* Toggle Modo Oscuro/Claro */}
           <button
             onClick={toggleTheme}
-            className="btn btn-secondary"
+            className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition"
             title="Cambiar tema"
-            style={{ padding: "8px 12px" }}
           >
             {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
           </button>
 
           {user && (
             <>
+              {/* Boton Admin */}
               {user.isAdmin && (
                 <button
                   onClick={onOpenAdmin}
-                  className="btn"
-                  style={{
-                    backgroundColor: "var(--warning-light)",
-                    color: "var(--warning)",
-                    border: "1px solid var(--warning)",
-                    padding: "8px 12px",
-                    fontSize: "0.85rem",
-                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/20 transition"
                   title="Panel de Administrador"
                 >
-                  <ShieldCheck size={18} />
+                  <ShieldCheck size={16} />
                   <span>Admin</span>
                 </button>
               )}
 
+              {/* Boton Perfil */}
               <button
                 onClick={onOpenProfile}
-                className="btn btn-secondary"
-                style={{ padding: "8px 14px", display: "flex", alignItems: "center", gap: "8px" }}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
               >
-                <User size={18} />
-                <span style={{ fontWeight: 600 }}>{user.name}</span>
+                <User size={16} />
+                <span>{user.name}</span>
               </button>
 
+              {/* Boton Logout */}
               <button
                 onClick={logout}
-                className="btn"
-                style={{
-                  backgroundColor: "transparent",
-                  color: "var(--text-secondary)",
-                  padding: "8px 12px",
-                }}
-                title="Cerrar sesión"
+                className="p-2 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition"
+                title="Cerrar sesion"
               >
                 <LogOut size={18} />
               </button>

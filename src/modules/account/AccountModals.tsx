@@ -32,14 +32,14 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose, onS
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Depositar Dinero">
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+      <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div style={{ color: "var(--danger)", fontSize: "0.85rem", backgroundColor: "var(--danger-light)", padding: "10px", borderRadius: "6px" }}>
+          <div className="p-3 rounded-xl text-sm bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/50">
             {error}
           </div>
         )}
         <div>
-          <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px" }}>
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
             Monto a ingresar ($)
           </label>
           <input
@@ -51,11 +51,16 @@ export const DepositModal: React.FC<DepositModalProps> = ({ isOpen, onClose, onS
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Ej: 5000"
             autoFocus
+            className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
           />
         </div>
-        <button type="submit" disabled={loading} className="btn btn-primary" style={{ width: "100%", backgroundColor: "var(--success)" }}>
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-2.5 px-4 rounded-xl font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] disabled:opacity-50 shadow-md shadow-emerald-500/20 flex items-center justify-center gap-2 transition"
+        >
           <ArrowDownLeft size={18} />
-          {loading ? "Procesando..." : "Confirmar Depósito"}
+          <span>{loading ? "Procesando..." : "Confirmar Depósito"}</span>
         </button>
       </form>
     </Modal>
@@ -93,14 +98,14 @@ export const TransferModal: React.FC<TransferModalProps> = ({ isOpen, onClose, o
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Nueva Transferencia">
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+      <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div style={{ color: "var(--danger)", fontSize: "0.85rem", backgroundColor: "var(--danger-light)", padding: "10px", borderRadius: "6px" }}>
+          <div className="p-3 rounded-xl text-sm bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/50">
             {error}
           </div>
         )}
         <div>
-          <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px" }}>
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
             Destinatario (CVU o Alias)
           </label>
           <input
@@ -110,10 +115,11 @@ export const TransferModal: React.FC<TransferModalProps> = ({ isOpen, onClose, o
             onChange={(e) => setDestination(e.target.value)}
             placeholder="ej: sol.rio o 0000912345"
             autoFocus
+            className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           />
         </div>
         <div>
-          <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px" }}>
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
             Monto a transferir ($)
           </label>
           <input
@@ -124,11 +130,16 @@ export const TransferModal: React.FC<TransferModalProps> = ({ isOpen, onClose, o
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Ej: 1500"
+            className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           />
         </div>
-        <button type="submit" disabled={loading} className="btn btn-primary" style={{ width: "100%" }}>
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-2.5 px-4 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.99] disabled:opacity-50 shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 transition"
+        >
           <ArrowUpRight size={18} />
-          {loading ? "Transfiriendo..." : "Enviar Dinero"}
+          <span>{loading ? "Transfiriendo..." : "Enviar Dinero"}</span>
         </button>
       </form>
     </Modal>
@@ -169,14 +180,14 @@ export const ChangeAliasModal: React.FC<ChangeAliasModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Modificar Alias">
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+      <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div style={{ color: "var(--danger)", fontSize: "0.85rem", backgroundColor: "var(--danger-light)", padding: "10px", borderRadius: "6px" }}>
+          <div className="p-3 rounded-xl text-sm bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/50">
             {error}
           </div>
         )}
         <div>
-          <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px" }}>
+          <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
             Nuevo Alias
           </label>
           <input
@@ -186,11 +197,16 @@ export const ChangeAliasModal: React.FC<ChangeAliasModalProps> = ({
             onChange={(e) => setAlias(e.target.value)}
             placeholder="ej: mi.cuenta.banco"
             autoFocus
+            className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           />
         </div>
-        <button type="submit" disabled={loading} className="btn btn-primary" style={{ width: "100%" }}>
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-2.5 px-4 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.99] disabled:opacity-50 shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 transition"
+        >
           <Edit3 size={18} />
-          {loading ? "Actualizando..." : "Guardar Alias"}
+          <span>{loading ? "Actualizando..." : "Guardar Alias"}</span>
         </button>
       </form>
     </Modal>

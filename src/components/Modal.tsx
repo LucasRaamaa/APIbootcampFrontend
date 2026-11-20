@@ -13,53 +13,20 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }
 
   return (
     <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.6)",
-        backdropFilter: "blur(4px)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 1000,
-        padding: "16px",
-      }}
+      className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity animate-in fade-in"
       onClick={onClose}
     >
       <div
-        className="card"
-        style={{
-          width: "100%",
-          maxWidth: "480px",
-          position: "relative",
-          animation: "modalFadeIn 0.2s ease-out",
-        }}
+        className="w-full max-w-md bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl p-6 transition-all"
         onClick={(e) => e.stopPropagation()}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: "20px",
-            borderBottom: "1px solid var(--border-color)",
-            paddingBottom: "12px",
-          }}
-        >
-          <h3 style={{ fontSize: "1.2rem", fontWeight: 700 }}>{title}</h3>
+        <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white">{title}</h3>
           <button
             onClick={onClose}
-            style={{
-              background: "transparent",
-              color: "var(--text-secondary)",
-              padding: "4px",
-              borderRadius: "6px",
-            }}
+            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
         {children}

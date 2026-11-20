@@ -47,33 +47,24 @@ export const App: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-          color: "var(--text-secondary)",
-          fontWeight: 600,
-        }}
-      >
+      <div className="min-h-screen flex items-center justify-center font-bold text-slate-400">
         Cargando billetera virtual...
       </div>
     );
   }
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 transition-colors">
       <Navbar
         onOpenProfile={() => setShowProfile(true)}
         onOpenAdmin={() => setShowAdmin(true)}
       />
 
-      <main style={{ flex: 1 }}>
+      <main className="flex-1">
         {!user ? (
           <AuthViews />
         ) : (
-          <div className="container">
+          <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
             {/* Tarjeta de Cuenta */}
             <AccountCard
               account={account}
@@ -120,16 +111,7 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      <footer
-        style={{
-          padding: "20px 0",
-          textAlign: "center",
-          fontSize: "0.8rem",
-          color: "var(--text-muted)",
-          borderTop: "1px solid var(--border-color)",
-          backgroundColor: "var(--bg-surface)",
-        }}
-      >
+      <footer className="py-6 text-center text-xs text-slate-400 border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50">
         Bank Digital Wallet • Bootcamp 2026
       </footer>
     </div>

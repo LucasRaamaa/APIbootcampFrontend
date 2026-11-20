@@ -9,13 +9,12 @@ export const AuthViews: React.FC = () => {
   const [tab, setTab] = useState<"login" | "register">("login");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
 
-  // Login state
+  // Login form
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Register state
+  // Register form
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [regEmail, setRegEmail] = useState("");
@@ -38,7 +37,6 @@ export const AuthViews: React.FC = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    setSuccess(null);
     setLoading(true);
     try {
       await userService.register({
@@ -61,41 +59,21 @@ export const AuthViews: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "460px",
-        margin: "60px auto",
-        padding: "0 16px",
-      }}
-    >
-      <div className="card" style={{ padding: "32px" }}>
+    <div className="max-w-md mx-auto my-12 px-4">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-8 transition-colors">
         {/* Selector de pestañas */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "8px",
-            backgroundColor: "var(--bg-elevated)",
-            padding: "4px",
-            borderRadius: "var(--radius-sm)",
-            marginBottom: "24px",
-          }}
-        >
+        <div className="grid grid-cols-2 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl mb-6">
           <button
             type="button"
             onClick={() => {
               setTab("login");
               setError(null);
             }}
-            style={{
-              padding: "10px",
-              borderRadius: "6px",
-              fontWeight: 700,
-              fontSize: "0.9rem",
-              backgroundColor: tab === "login" ? "var(--bg-surface)" : "transparent",
-              color: tab === "login" ? "var(--primary)" : "var(--text-secondary)",
-              boxShadow: tab === "login" ? "var(--shadow-sm)" : "none",
-            }}
+            className={`py-2 px-3 rounded-lg text-sm font-bold transition-all ${
+              tab === "login"
+                ? "bg-white dark:bg-slate-700 text-blue-600 dark:text-white shadow-sm"
+                : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-200"
+            }`}
           >
             Iniciar Sesión
           </button>
@@ -105,55 +83,26 @@ export const AuthViews: React.FC = () => {
               setTab("register");
               setError(null);
             }}
-            style={{
-              padding: "10px",
-              borderRadius: "6px",
-              fontWeight: 700,
-              fontSize: "0.9rem",
-              backgroundColor: tab === "register" ? "var(--bg-surface)" : "transparent",
-              color: tab === "register" ? "var(--primary)" : "var(--text-secondary)",
-              boxShadow: tab === "register" ? "var(--shadow-sm)" : "none",
-            }}
+            className={`py-2 px-3 rounded-lg text-sm font-bold transition-all ${
+              tab === "register"
+                ? "bg-white dark:bg-slate-700 text-blue-600 dark:text-white shadow-sm"
+                : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-200"
+            }`}
           >
             Registrarse
           </button>
         </div>
 
         {error && (
-          <div
-            style={{
-              backgroundColor: "var(--danger-light)",
-              color: "var(--danger)",
-              padding: "12px",
-              borderRadius: "var(--radius-sm)",
-              marginBottom: "16px",
-              fontSize: "0.9rem",
-              border: "1px solid var(--danger)",
-            }}
-          >
+          <div className="p-3 mb-4 rounded-xl text-sm bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/50">
             {error}
           </div>
         )}
 
-        {success && (
-          <div
-            style={{
-              backgroundColor: "var(--success-light)",
-              color: "var(--success)",
-              padding: "12px",
-              borderRadius: "var(--radius-sm)",
-              marginBottom: "16px",
-              fontSize: "0.9rem",
-            }}
-          >
-            {success}
-          </div>
-        )}
-
         {tab === "login" ? (
-          <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px" }}>
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
                 Correo electrónico
               </label>
               <input
@@ -162,10 +111,11 @@ export const AuthViews: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="ejemplo@correo.com"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               />
             </div>
             <div>
-              <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px" }}>
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
                 Contraseña
               </label>
               <input
@@ -174,23 +124,23 @@ export const AuthViews: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               />
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="btn btn-primary"
-              style={{ marginTop: "8px", width: "100%" }}
+              className="w-full py-2.5 px-4 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.99] disabled:opacity-50 shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 transition"
             >
               <LogIn size={18} />
-              {loading ? "Iniciando..." : "Acceder"}
+              <span>{loading ? "Iniciando..." : "Acceder"}</span>
             </button>
           </form>
         ) : (
-          <form onSubmit={handleRegister} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+          <form onSubmit={handleRegister} className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px" }}>
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
                   Nombre
                 </label>
                 <input
@@ -199,10 +149,11 @@ export const AuthViews: React.FC = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Juan"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 />
               </div>
               <div>
-                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px" }}>
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
                   Apellido
                 </label>
                 <input
@@ -210,12 +161,13 @@ export const AuthViews: React.FC = () => {
                   required
                   value={lastname}
                   onChange={(e) => setLastname(e.target.value)}
-                  placeholder="Pérez"
+                  placeholder="Perez"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 />
               </div>
             </div>
             <div>
-              <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px" }}>
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
                 Correo electrónico
               </label>
               <input
@@ -224,10 +176,11 @@ export const AuthViews: React.FC = () => {
                 value={regEmail}
                 onChange={(e) => setRegEmail(e.target.value)}
                 placeholder="juan@correo.com"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               />
             </div>
             <div>
-              <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px" }}>
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
                 Contraseña (mín. 8 caracteres)
               </label>
               <input
@@ -237,16 +190,16 @@ export const AuthViews: React.FC = () => {
                 value={regPassword}
                 onChange={(e) => setRegPassword(e.target.value)}
                 placeholder="••••••••"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               />
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="btn btn-primary"
-              style={{ marginTop: "8px", width: "100%" }}
+              className="w-full py-2.5 px-4 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.99] disabled:opacity-50 shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 transition"
             >
               <UserPlus size={18} />
-              {loading ? "Creando cuenta..." : "Crear Cuenta"}
+              <span>{loading ? "Creando cuenta..." : "Crear Cuenta"}</span>
             </button>
           </form>
         )}

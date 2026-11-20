@@ -27,37 +27,14 @@ export const AccountCard: React.FC<AccountCardProps> = ({
   if (!account) return null;
 
   return (
-    <div
-      className="card"
-      style={{
-        background: "linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-elevated) 100%)",
-        border: "1px solid var(--border-color)",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          marginBottom: "16px",
-        }}
-      >
+    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm transition-colors">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100 dark:border-slate-800">
         <div>
-          <span
-            style={{
-              fontSize: "0.85rem",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-              color: "var(--text-secondary)",
-              fontWeight: 700,
-            }}
-          >
+          <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
             {account.name || "Cuenta Corriente"}
           </span>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "4px" }}>
-            <span style={{ fontSize: "2.4rem", fontWeight: 800, letterSpacing: "-0.03em" }}>
+          <div className="flex items-center gap-3 mt-1">
+            <span className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
               {showBalance
                 ? `$ ${Number(account.balance).toLocaleString("es-AR", {
                     minimumFractionDigits: 2,
@@ -67,29 +44,27 @@ export const AccountCard: React.FC<AccountCardProps> = ({
             </span>
             <button
               onClick={() => setShowBalance(!showBalance)}
-              style={{
-                background: "transparent",
-                color: "var(--text-secondary)",
-                padding: "6px",
-              }}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
               title={showBalance ? "Ocultar saldo" : "Mostrar saldo"}
             >
-              {showBalance ? <EyeOff size={20} /> : <Eye size={20} />}
+              {showBalance ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
         </div>
 
         {/* Acciones Rápidas */}
-        <div style={{ display: "flex", gap: "10px" }}>
+        <div className="flex gap-2">
           <button
             onClick={onOpenDeposit}
-            className="btn btn-primary"
-            style={{ backgroundColor: "var(--success)" }}
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm shadow-emerald-600/20 active:scale-[0.98] transition"
           >
             <ArrowDownLeft size={18} />
             <span>Depositar</span>
           </button>
-          <button onClick={onOpenTransfer} className="btn btn-primary">
+          <button
+            onClick={onOpenTransfer}
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm bg-blue-600 hover:bg-blue-700 text-white shadow-sm shadow-blue-600/20 active:scale-[0.98] transition"
+          >
             <ArrowUpRight size={18} />
             <span>Transferir</span>
           </button>
@@ -97,75 +72,50 @@ export const AccountCard: React.FC<AccountCardProps> = ({
       </div>
 
       {/* Datos Bancarios: CVU y Alias */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-          gap: "12px",
-          marginTop: "16px",
-          paddingTop: "16px",
-          borderTop: "1px solid var(--border-color)",
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "var(--bg-surface)",
-            padding: "10px 14px",
-            borderRadius: "var(--radius-sm)",
-            border: "1px solid var(--border-color)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
+        {/* CVU */}
+        <div className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800">
           <div>
-            <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", fontWeight: 600 }}>
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
               CVU
             </div>
-            <div style={{ fontFamily: "monospace", fontSize: "0.95rem", fontWeight: 700 }}>
+            <div className="font-mono font-bold text-sm sm:text-base text-slate-800 dark:text-slate-200">
               {account.cvu}
             </div>
           </div>
           <button
             onClick={() => copyToClipboard(account.cvu, "cvu")}
-            style={{ background: "transparent", color: "var(--text-secondary)" }}
+            className="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-700 transition"
             title="Copiar CVU"
           >
-            {copiedField === "cvu" ? <Check size={18} color="var(--success)" /> : <Copy size={18} />}
+            {copiedField === "cvu" ? <Check size={16} className="text-emerald-500" /> : <Copy size={16} />}
           </button>
         </div>
 
-        <div
-          style={{
-            backgroundColor: "var(--bg-surface)",
-            padding: "10px 14px",
-            borderRadius: "var(--radius-sm)",
-            border: "1px solid var(--border-color)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+        {/* ALIAS */}
+        <div className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800">
           <div>
-            <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", fontWeight: 600 }}>
-              ALIAS
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              Alias
             </div>
-            <div style={{ fontSize: "0.95rem", fontWeight: 700 }}>{account.alias}</div>
+            <div className="font-bold text-sm sm:text-base text-slate-800 dark:text-slate-200">
+              {account.alias}
+            </div>
           </div>
-          <div style={{ display: "flex", gap: "6px" }}>
+          <div className="flex items-center gap-1">
             <button
               onClick={() => copyToClipboard(account.alias, "alias")}
-              style={{ background: "transparent", color: "var(--text-secondary)" }}
+              className="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-700 transition"
               title="Copiar Alias"
             >
-              {copiedField === "alias" ? <Check size={18} color="var(--success)" /> : <Copy size={18} />}
+              {copiedField === "alias" ? <Check size={16} className="text-emerald-500" /> : <Copy size={16} />}
             </button>
             <button
               onClick={onOpenAlias}
-              style={{ background: "transparent", color: "var(--primary)" }}
+              className="p-2 rounded-xl text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 transition"
               title="Modificar Alias"
             >
-              <Edit3 size={18} />
+              <Edit3 size={16} />
             </button>
           </div>
         </div>
